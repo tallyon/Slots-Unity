@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Arm.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\ScoreUpdate.cs" />
      <Compile Include="Assets\Scripts\SlotManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Programy/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
