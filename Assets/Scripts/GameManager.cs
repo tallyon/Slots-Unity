@@ -12,13 +12,16 @@ public class GameManager : MonoBehaviour {
     //  Tablica wartości każdego z pól na kole obrotowym maszyny
     public int[] fieldValues = { 3, 2, 1, 5, 4, 3, 2, 1, 5, 4 };
     //  Tablica wartości wylosowanych w ostatnim losowaniu pól
-    public  int[] drawnFields = new int[numberOfSlotRollers];
+	[HideInInspector]
+    public int[] drawnFields = new int[numberOfSlotRollers];
     //  Tablica skryptów SlotManager na każdym z kół obrotowych maszyny ustawionych od lewej do prawej
     public SlotManager[] slotManager = new SlotManager[numberOfSlotRollers];
     //  Zmienna przechowuje informacje ile kół maszyny skończyło się kręcić. Kiedy skończą wszystkie (finishedRolling == numberOfSlotRollers) wywołaj funkcje
     //  uaktualniającą wynik w ScoreUpdate
+	[HideInInspector]
     public int finishedRolling;
 
+	[HideInInspector]
     public bool gameOver;
     bool autoplay;
 
@@ -50,7 +53,7 @@ public class GameManager : MonoBehaviour {
 
         //  Wylosuj ilość obrotów dla każdego koła
         Random.seed = System.DateTime.Now.Millisecond;
-        int slot1Rotations = Random.Range(12, 27);
+        int slot1Rotations = Random.Range(17, 27);
 
         //  Wywołanie animacji losowanie dla każdego koła obrotowego maszyny
         for (int i = 0; i < slotManager.Length; i++)
@@ -87,4 +90,10 @@ public class GameManager : MonoBehaviour {
     {
         autoplay = !autoplay;
     }
+
+	//	Kończy działanie aplikacji. Po wciśnięciu przycisuk Exit w Menu
+	public void ExitGame()
+	{
+		Application.Quit ();
+	}
 }

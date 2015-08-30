@@ -3,10 +3,11 @@ using System.Collections;
 
 public class Arm : MonoBehaviour {
 
-	public float speed = 1.0f;
+	float speed = 1.0f;
+	[HideInInspector]
 	public bool animate = false;
-	public float zRotationDestination = 310.0f;
-	public float zRotation = 340.0f;
+	float zRotationDestination = 310.0f;
+	float zRotation = 340.0f;
 
     Transform transform;
 

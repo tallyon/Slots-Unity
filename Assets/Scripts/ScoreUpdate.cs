@@ -24,7 +24,6 @@ public class ScoreUpdate : MonoBehaviour
     {
         //  Sprawdź jaka wartość została wylosowana, znajdź tę wartość w gameManager.fieldValues, pobierz jej indeks i inkrementuj ten sam indeks
         //  tablicy scoredFields w tej klasie
-        print("DrawnFields: " + gameManager.drawnFields.ToString());
         foreach (int draw in gameManager.drawnFields)
         {
             for (int i = 0; i < scoredFields.Length; i++)
