@@ -32,9 +32,10 @@ public class GameManager : MonoBehaviour
             return;
 
         if (Input.GetKeyDown(KeyCode.Space))
-        {
             Play();
-        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            ExitGame();
 
         //  Autoplay
         if (autoplay)
