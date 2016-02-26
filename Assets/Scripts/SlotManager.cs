@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class SlotManager : MonoBehaviour {
+public class SlotManager : MonoBehaviour
+{
 
-	float angle = 0;
-	public float maxSpeed = 7;
+    float angle = 0;
+    public float maxSpeed = 7;
     public float minSpeed = .2f;
-	float acceleration = 0;
+    float acceleration = 0;
     [HideInInspector]
-	public bool rolling = false;
+    public bool rolling = false;
 
     int currentFieldIndex = 0;
     int currentField = 3;
@@ -16,22 +16,22 @@ public class SlotManager : MonoBehaviour {
     float rotatedAngle;
     float newRot;
 
-    Transform transform;
+    Transform trans;
     public GameManager gameManager;
-    
-	void Start ()
-	{
-        transform = GetComponent<Transform>();
+
+    void Start()
+    {
+        trans = GetComponent<Transform>();
         //  Przyspieszenie obrotów koła maszyny podczas losowania
         acceleration = 5;
         //  Ustalenie o jaki kąt należy obrócić koło maszyny żeby wskazać kolejny element losowania
         angle = 360 / GameManager.numberOfFieldsOnSlot;
-	}
-	
-	void Update ()
-	{
+    }
+
+    void Update()
+    {
         if (rolling)
-        {            
+        {
             if (rotatedAngle < angle * rotations)
             {
                 //  Jeśli zostało więcej niż 10 obrotów przyspieszaj o acceleration na sekundę, ale prędkość nie może przekroczyć maxSpeed
@@ -40,9 +40,9 @@ public class SlotManager : MonoBehaviour {
                     newRot = Mathf.Clamp(newRot + acceleration * Time.deltaTime, 0, maxSpeed);
                 else
                     newRot = maxSpeed * (angle * rotations - rotatedAngle) / (10 * angle) + minSpeed;
-                
+
                 //  Obrót o newRot
-                transform.Rotate(0, newRot, 0);
+                trans.Rotate(0, newRot, 0);
                 rotatedAngle += newRot;
             }
             else
@@ -56,7 +56,7 @@ public class SlotManager : MonoBehaviour {
                 gameManager.UpdateScore();
             }
         }
-	}
+    }
 
     //  Funkcja losująca na podstawie parametru całkowitoliczbowego znaczącego ilość obrotów, jakie mają zostać wykonane
     public int RollSlotByRotations(int rot)

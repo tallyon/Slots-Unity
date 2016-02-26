@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class GameManager : MonoBehaviour {
-    
-	public Arm arm;
+public class GameManager : MonoBehaviour
+{
+    public Arm arm;
 
     //  Ilość kół obrotowych w maszynie
     public const int numberOfSlotRollers = 3;
@@ -12,40 +11,40 @@ public class GameManager : MonoBehaviour {
     //  Tablica wartości każdego z pól na kole obrotowym maszyny
     public int[] fieldValues = { 3, 2, 1, 5, 4, 3, 2, 1, 5, 4 };
     //  Tablica wartości wylosowanych w ostatnim losowaniu pól
-	[HideInInspector]
+    [HideInInspector]
     public int[] drawnFields = new int[numberOfSlotRollers];
     //  Tablica skryptów SlotManager na każdym z kół obrotowych maszyny ustawionych od lewej do prawej
     public SlotManager[] slotManager = new SlotManager[numberOfSlotRollers];
     //  Zmienna przechowuje informacje ile kół maszyny skończyło się kręcić. Kiedy skończą wszystkie (finishedRolling == numberOfSlotRollers) wywołaj funkcje
     //  uaktualniającą wynik w ScoreUpdate
-	[HideInInspector]
+    [HideInInspector]
     public int finishedRolling;
 
-	[HideInInspector]
+    [HideInInspector]
     public bool gameOver;
     bool autoplay;
 
     public ScoreUpdate scoreUpdateScript;
 
-	void Update()
-	{
+    void Update()
+    {
         if (gameOver)
             return;
 
-		if (Input.GetKeyDown (KeyCode.Space))
-		{
-			Play ();
-		}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Play();
+        }
 
         //  Autoplay
-        if(autoplay)
+        if (autoplay)
             Play();
-	}
+    }
 
     //  Obsługa logiki gry
-	void Play()
-	{
-        foreach(SlotManager slot in slotManager)
+    void Play()
+    {
+        foreach (SlotManager slot in slotManager)
         {
             if (slot.rolling)
                 return;
@@ -65,11 +64,11 @@ public class GameManager : MonoBehaviour {
         }
 
         //  Animacja ramienia maszyny
-        arm.ArmAnimate ();
+        arm.ArmAnimate();
 
         //  Poniesienie kosztu losowania, jeśli zabrakło funduszy (score) ustaw gameOver na true
         gameOver = !scoreUpdateScript.PayToPlay();
-	}
+    }
 
     //  Inkrementuj licznik kół, które zakończyły animację i jeśli wszystkie skończyły wywołaj UpdateScore() i zresetuj licznik
     public void UpdateScore()
@@ -91,9 +90,9 @@ public class GameManager : MonoBehaviour {
         autoplay = !autoplay;
     }
 
-	//	Kończy działanie aplikacji. Po wciśnięciu przycisuk Exit w Menu
-	public void ExitGame()
-	{
-		Application.Quit ();
-	}
+    //	Kończy działanie aplikacji. Po wciśnięciu przycisuk Exit w Menu
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

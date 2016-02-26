@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class ScoreUpdate : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class ScoreUpdate : MonoBehaviour
     public void Start()
     {
         textField = GetComponent<Text>();
-        scoredFields = new int[GameManager.numberOfFieldsOnSlot/2];
+        scoredFields = new int[GameManager.numberOfFieldsOnSlot / 2];
         totalScore = 10;
         textField.text = "Score: " + totalScore;
     }
@@ -39,10 +38,10 @@ public class ScoreUpdate : MonoBehaviour
         //  Dla każdego elementu pomnóż scoreFields[i] z gameManager.fieldValues[i] i dodaj do totalScore
         int newScore = 0;
 
-        for(int i = 0; i < scoredFields.Length; i++)
+        for (int i = 0; i < scoredFields.Length; i++)
         {
             //  Zalicz trafienie tylko kiedy trafiono wartość przynajmniej dwa razy
-            if(scoredFields[i] > 1)
+            if (scoredFields[i] > 1)
                 newScore += scoredFields[i] * gameManager.fieldValues[i];
         }
 
