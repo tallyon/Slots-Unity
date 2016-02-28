@@ -3,9 +3,12 @@ using UnityEngine.UI;
 
 public class ScoreUpdate : MonoBehaviour
 {
-    int totalScore;
-    public int[] scoredFields;
-    public int costOfPlaying = 2;
+    [SerializeField]
+    private int initialScore;
+    private int totalScore;
+    private int[] scoredFields;
+    [SerializeField]
+    public int costOfPlaying;
 
     Text textField;
     public GameManager gameManager;
@@ -13,55 +16,59 @@ public class ScoreUpdate : MonoBehaviour
     public void Start()
     {
         textField = GetComponent<Text>();
+        // All the numbers on each roller of the slot are doubled, so there are half as many numbers as number of fields
         scoredFields = new int[GameManager.numberOfFieldsOnSlot / 2];
-        totalScore = 10;
+        totalScore = initialScore;
         textField.text = "Score: " + totalScore;
     }
 
-    //  Oblicz wynik losowania i wypisz go na ekranie
+    /// <summary>
+    /// Check drawn fields, evaluate score and update UI
+    /// </summary>
     public void UpdateScore()
     {
-        //  Sprawdź jaka wartość została wylosowana, znajdź tę wartość w gameManager.fieldValues, pobierz jej indeks i inkrementuj ten sam indeks
-        //  tablicy scoredFields w tej klasie
-        foreach (int draw in gameManager.drawnFields)
+        // For every drawn field on the slot machine check how many times this exact field occured and store number of occurencies in scoredFields' appropriate index
+        foreach (int draw in gameManager.DrawnFields)
         {
             for (int i = 0; i < scoredFields.Length; i++)
             {
-                if (gameManager.fieldValues[i] == draw)
+                if (gameManager.FieldValues[i] == draw)
                 {
                     scoredFields[i]++;
-                    print("Trafiono " + draw + "! To " + scoredFields[i] + " trafienie! i: " + i);
+                    //Debug.Log("Trafiono " + draw + "! To " + scoredFields[i] + " trafienie! i: " + i);
                 }
             }
         }
 
-        //  Dla każdego elementu pomnóż scoreFields[i] z gameManager.fieldValues[i] i dodaj do totalScore
         int newScore = 0;
-
         for (int i = 0; i < scoredFields.Length; i++)
         {
-            //  Zalicz trafienie tylko kiedy trafiono wartość przynajmniej dwa razy
+            // If scored field was drawn at least twice add to the score score field's value multiplied by number of occurencies
             if (scoredFields[i] > 1)
-                newScore += scoredFields[i] * gameManager.fieldValues[i];
+                newScore += scoredFields[i] * gameManager.FieldValues[i];
         }
 
         totalScore += newScore;
 
-        //  Uaktualnij wynik w polu tekstowym w interfejsie
+        // Update UI
         textField.text = "Score: " + totalScore;
 
-        //  Wyczyść tablicę z liczbą trafień wartości scoredFields
+        // Cler the array of scored fields
         for (int i = 0; i < scoredFields.Length; i++)
         {
             scoredFields[i] = 0;
         }
     }
 
-    //  Odejmij koszt losowania od wyniku, jeśli 0 lub mniej zwróc false i napisz Game Over!
+    /// <summary>
+    /// Subtract score to play the slots machine
+    /// </summary>
+    /// <returns></returns>
     public bool PayToPlay()
     {
         totalScore -= costOfPlaying;
 
+        // If there are not enough points to pay for playing - Game over
         if (totalScore <= 0)
         {
             textField.text = "Game Over!";

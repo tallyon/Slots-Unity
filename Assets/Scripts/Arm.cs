@@ -2,11 +2,10 @@
 
 public class Arm : MonoBehaviour
 {
-    float speed = 1.0f;
-    [HideInInspector]
-    public bool animate = false;
-    float zRotationDestination = 310.0f;
-    float zRotation = 340.0f;
+    private float speed = 1.0f;
+    private float zRotationDestination = 310.0f;
+    private float zRotation = 340.0f;
+    private bool animate;
 
     private Transform trans;
 
@@ -18,20 +17,20 @@ public class Arm : MonoBehaviour
     void Update()
     {
         zRotation = trans.rotation.eulerAngles.z;
-
-        //  Animacja ze stałą szybkością speed od rotacji na osi z 340 do 310 i z powrotem z szybkością -0.5
+        
+        // Animates with constant speed on z axis from 340 to 310 and backwards with slower speed (speed mod = -.5f)
         if (animate)
         {
-            //  Ruch w dół
+            // Animate pulling down the arm
             if (speed > 0)
             {
                 trans.Rotate(0, 0, -speed);
 
-                //  Nadaj prędkości przeciwny zwrot i mniejszą wartości jeśli dźwignia dotarła do końca
+                // Set speed modifier to half the speed and backwards
                 if (zRotation <= zRotationDestination)
-                    speed = -0.5f;
+                    speed *= -.5f;
             }
-            //  Ruch powrotny w górę
+            // Animate slower return of the arm to it's former position
             else if (speed < 0)
             {
                 trans.Rotate(0, 0, -speed);
@@ -46,12 +45,9 @@ public class Arm : MonoBehaviour
         }
     }
 
-    //  Sprawdzenie czy animacja nie jest właśnie w trakcie
-    public void ArmAnimate()
+    // Set animate flag
+    public void Animate()
     {
-        if (animate)
-            return;
-
         animate = true;
     }
 }

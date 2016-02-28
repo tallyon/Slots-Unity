@@ -3,15 +3,17 @@ using UnityEngine.UI;
 
 public class AutoplayButton : MonoBehaviour
 {
-    Text text;
-    bool pressed;
+    private Text text;
+    private bool pressed;
 
     void Start()
     {
         text = GetComponentInChildren<Text>();
     }
 
-    //	Funkcja wywołana podczas wciśnięcia przycisku Autoplay - zmienia napis w jego potomku
+    /// <summary>
+    /// Toggle pressed flag and update text on button
+    /// </summary>
     public void ButtonPress()
     {
         pressed = !pressed;
